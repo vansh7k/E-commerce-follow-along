@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const [errormsg, seterrormsg] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loading state
 
     const username = e.target.user.value;
     const password = e.target.password.value;
@@ -26,7 +23,6 @@ const Login = () => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        // Save user session data if necessary
         navigate("/Home");
       } else {
         seterrormsg(data.message);
@@ -34,13 +30,11 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       seterrormsg("Something went wrong, please try again.");
-    } finally {
-      setLoading(false); // Hide loading state
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       <form
         onSubmit={handlesubmit}
         className="p-8 bg-gray-800/80 rounded-lg shadow-lg flex flex-col gap-6 w-full max-w-md border border-gray-600 backdrop-blur-md"
@@ -91,9 +85,8 @@ const Login = () => {
         <button
           type="submit"
           className="w-full py-3 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition duration-300"
-          disabled={loading}
         >
-          {loading ? "Loading..." : "Submit"}
+          Submit
         </button>
       </form>
     </div>
