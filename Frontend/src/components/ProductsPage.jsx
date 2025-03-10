@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Card from "./Card";
 import { Nav } from "./Nav";
 
-
-const Home = () => {
-  const navigate = useNavigate();
+const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
@@ -29,19 +26,8 @@ const Home = () => {
       <Nav />
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col items-center px-4">
         <h1 className="text-4xl md:text-5xl font-extrabold text-center mt-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
-          Welcome to the Home Page!
+          All Products
         </h1>
-
-        <p className="text-gray-400 mt-4 text-lg">
-          Check out our amazing products below:
-        </p>
-
-        <button
-          onClick={() => navigate("/productform")}
-          className="mt-6 px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300"
-        >
-          Create Product
-        </button>
 
         {error && <p className="text-red-500 mt-4">{error}</p>}
 
@@ -59,9 +45,8 @@ const Home = () => {
           ))}
         </div>
       </div>
-      
     </>
   );
 };
 
-export default Home;
+export default ProductsPage;
