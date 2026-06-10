@@ -1,140 +1,84 @@
-# Ecommerce-Follow-Along
+# MAVERICK by Antigravity — Unapologetic Streetwear E-Commerce
 
-     A hands-on project demonstrating the power of the MERN stack by creating a functional e-commerce platform.
+A hands-on, high-end MERN stack streetwear e-commerce platform featuring a brutalist-minimalist design. 
 
-## E-Commerce Application using MERN Stack
+## 🔗 Live Deployments
 
-Welcome to the E-Commerce Application project! 🚀 This project involves building a full-fledged e-commerce platform from scratch using the **MERN stack** (MongoDB, Express.js, React.js, and Node.js). This repository serves as a comprehensive guide and documentation for the application.
-
----
-
-## 🌟 Features of the Application
-
-- **User Authentication**: Secure registration and login system.
-- **Product Management**: Add, update, and retrieve product details.
-- **Order Handling**: Seamlessly manage customer orders.
-- **REST API Integration**: Well-structured endpoints for interaction.
-- **Database Schema Design**: Efficient schema structure in MongoDB.
-- **Authentication & Authorization**: Role-based access for secure transactions.
-
-## Milestones 
-
-### Milestone 1: Repository Creation
-
-- Created a GitHub repository named "Ecommerce-Follow-Along" with a README file.
-
-### Milestone 2: Initial Setup & Login Page
-
-- Pushed code to the GitHub repository.
-- Created separate folders for frontend and backend.
-- Implemented a functional Login Page in the frontend.
-
-### Milestone 3: Project Setup & Foundation
-
-- Established project structure, database connection, and basic error handling.
-
-### Milestone 4: User Authentication & File Uploads
-
-- Implemented user registration, login, and file upload functionalities.
-- Integrated user authentication and authorization middleware.
-
-### Milestone 5: User Signup
-
-- Created the Signup page with form validation.
-
-### Milestone 6
-
-1. **Encrypt Password:**
-
-   - Hash the user's password using `bcrypt` during signup.
-   - Store the hashed password in the database.
-
-2. **Store User Data:**
-   - Save all user data (e.g., name, email) in the database.
-   - Ensure the password remains encrypted and secure.
-
-### Milestone 7:
-
-**Login Endpoint**
-
-1. **Accept User Credentials:** Receive user input for email/username and password.
-2. **Retrieve User:** Query the database to find the user associated with the provided credentials.
-3. **Password Validation:**
-   - Hash the entered password using `bcrypt`.
-   - Compare the hashed input with the stored hashed password in the database.
-   - If they match, authentication is successful.
-
-### Milestone 8: Product Card & Homepage Layout
-
-- Created a reusable Card Component with props for product details.
-- Designed the Homepage layout using a grid or flexbox to display multiple product cards.
-### Milestone 9: Product Form Creation
-
-1. **Create Product Form:**
-   - Make a form for adding product details like name, description, price, and images.
-
-2. **Image Uploads:**
-   - Allow users to upload multiple images for the product.
-
-3. **Form Validation:**
-   - Check that the form fields are filled correctly (e.g., price is a number, name is not empty).
-
-### Milestone 10: Product Schema & Endpoint
-
-1. **Product Schema:**
-   - Define product details (name, description, price, image URL) using Mongoose with validation.
-
-2. **Endpoint Creation:**
-   - Create a POST endpoint to save product data to MongoDB.
-
-3. **Why Validation?**
-   - Ensures only valid data is saved, keeping the database accurate.
-
-
-### Milestone 11: Display Products Dynamically
-
-1. **Backend:**
-   - Create an endpoint to send all product data from MongoDB to the frontend.
-
-2. **Frontend:**
-   - Write a function to fetch product data from the backend.
-   - Pass the fetched data to the product card component.
-
-3. **Dynamic Display:**
-   - Use the product card component to display all products dynamically on the page.
-
-## Milestone 12: My Products Page
- This milestone focuses on creating a "My Products" page that displays only the products added by the logged-in user (identified by their email).
-
-**Key Objectives:**
-
-* Implement a backend endpoint that retrieves products from MongoDB, filtering by the user's email address.
-
-* Create a frontend function to fetch the filtered product data from the endpoint.
-
-* Dynamically render the retrieved product data on the "My Products" page using the existing product card component.
-
-## Milestone 13: Product Update Endpoint and Form Auto-fill
-
-- **Update Endpoint**: Developed a PUT endpoint to receive updated product data and modify the corresponding document in MongoDB.
-- **Frontend Integration**: Added an "Edit" button to the product card. Clicking it pre-fills the product form with existing data for editing.
-- **Form Auto-fill**: Implemented functionality to populate the product form with the selected product's details, enabling easy modification.
-- **Data Persistence**: Ensured that the updated product data is correctly saved to the MongoDB database.
-- **Testing**: Verified the update functionality using Postman and by testing the edit flow in the application.
-- **GitHub Updates**: Committed all changes related to the update endpoint and form auto-fill to the repository.
+* **🖥️ Live Frontend (Netlify)**: [glistening-capybara-a5e62f.netlify.app](https://glistening-capybara-a5e62f.netlify.app/)
+* **⚙️ Live Backend API (Render)**: [e-commerce-follow-along-iurp.onrender.com](https://e-commerce-follow-along-iurp.onrender.com/)
 
 ---
 
-## Milestone 14: Product Delete Endpoint
+## 🎯 About the Project
 
-- **Delete Endpoint**: Created a DELETE endpoint to remove a product from MongoDB based on its ID.
-- **Frontend Integration**: Added a "Delete" button to the product card. Clicking it triggers the deletion of the corresponding product.
-- **Confirmation**: Implemented a confirmation dialog before deleting a product to prevent accidental deletions.
-- **Data Removal**: Ensured that the product is successfully removed from the MongoDB database.
-- **Testing**: Verified the delete functionality using Postman and by testing the delete flow in the application.
-- **GitHub Updates**: Committed all changes related to the delete endpoint and frontend integration to the repository.
+**MAVERICK** is a full-stack clothing e-commerce website designed and engineered from scratch to serve as a premium shopping experience. Instead of building a generic online storefront, **MAVERICK** adopts a dry, raw, and high-fashion editorial aesthetic inspired by modern street archives. 
+
+### Why was it built this way?
+1. **Raw Brutalist Aesthetics**: Modern web templates often feel repetitive. MAVERICK uses a stark dark void background (`#0A0A0A`), bone-white contrasts (`#E8E2D9`), and industrial ember orange highlights (`#C9440E`) to command immediate attention.
+2. **Zero Border-Radius Reset**: Every layout card, button, input, and overlay is designed with zero border-radius (`border-radius: 0 !important`) to maintain a sharp, grid-aligned, structured brutalist silhouette.
+3. **No UI Component Libraries**: Built using vanilla CSS and CSS custom properties rather than Tailwind, Bootstrap, or component UI libraries (like MUI or Shadcn). This ensures absolute control over layouts, transition curves, hover card translation offsets, and sliding marquees.
+4. **Cinematic Micro-Animations**: Features custom marquees, custom skeleton shimmers, grayscaled product card hovers that transition smoothly into full color, and a sliding sliding cart drawer.
 
 ---
 
-## Milestone 15: Navigation Component
+## ⚙️ Core Technical Features
 
+### Backend (Node.js + Express + MongoDB)
+* **6 Custom Mongoose Models**: User (with addresses array), Product (slugs, SKUs, inventory logs), Category, Order (stock auto-deductions), Review (star ratings), and Wishlist.
+* **Security & Auth**: User login/registration using bcrypt password hashing and JWT token authorization headers.
+* **Stripe Gateway Simulation**: PaymentIntent processing mapped to standard Indian Rupee (INR) transactions.
+* **Secure Webhook Routing**: A dedicated raw body `/webhook` receiver mounted BEFORE `express.json()` to prevent signature validation crashes.
+* **Cloudinary Storage**: File uploads integrated directly with Cloudinary API and a local server fallback buffer.
+
+### Frontend (React + Vite + Zustand)
+* **Zustand State Cart**: Optimized client-side cart operations with localStorage persistence.
+* **Axios Auth Interceptors**: Automatically appends the Bearer token to headers on every request.
+* **Auth Route Guards**: Custom `<ProtectedRoute>` and `<AdminRoute>` guards that lock dashboards and checkout portals from unauthenticated access.
+* **Admin Control Center**: KPI indicators showing live stats, low stock warnings, inline order status toggling, and customer registries.
+
+---
+
+## 📂 Project Structure
+
+```
+E-commerce-follow-along/
+├── Backend/
+│   ├── config/          # DB connections
+│   ├── controller/      # Auth, products, cart, order logic
+│   ├── middleware/      # Auth validation, Cloudinary uploads
+│   ├── model/           # User, product, category mongoose schemas
+│   ├── routes/          # Express API route endpoints
+│   ├── seed.js          # DB seeder script (12 default streetwear items)
+│   └── index.js         # Express entry point
+└── Frontend/
+    ├── src/
+    │   ├── api/         # Axios interceptor
+    │   ├── components/  # Navbar, Footer, ProductCard, CartDrawer, etc.
+    │   ├── pages/       # Home, Shop, Detail, Account, Admin panels
+    │   ├── store/       # Zustand cart and toast states
+    │   ├── index.css    # Plain CSS variables and global theme
+    │   ├── App.jsx      # React Router map
+    │   └── main.jsx     # App mounting
+```
+
+---
+
+## 🚀 Development Milestones Tracker
+
+This repository documents a step-by-step milestone progression building up to the final launch:
+
+### Milestone 1 to 5: Base Repository & Initial Authentication
+- Established project folder hierarchies for client and server.
+- Built backend database configurations and connection controllers.
+- Created registration forms with validation checks and password encryption using `bcrypt`.
+
+### Milestone 6 to 10: Product Management Foundations
+- Implemented JWT token authorization controllers.
+- Defined Mongoose schema architectures for product management (name, description, prices, and upload handles).
+- Designed interactive product uploading forms with server validation.
+
+### Milestone 11 to 15: Catalog Rendering & CRUD Overrides
+- Fetched and displayed products dynamically in standard grids.
+- Added product edit overlays, pre-filled forms, and database update actions.
+- Built product deletions with confirmation prompts.
+- Created navigation bars and integrated responsive design layouts.
