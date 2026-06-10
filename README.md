@@ -4,7 +4,7 @@ A hands-on, high-end MERN stack streetwear e-commerce platform featuring a bruta
 
 ## 🔗 Live Deployments
 
-* **🖥️ Live Frontend (Netlify)**: [glistening-capybara-a5e62f.netlify.app](https://glistening-capybara-a5e62f.netlify.app/)
+* **🖥️ Live Frontend (Netlify)**: https://6a29af031bce85009d01a74f--glistening-capybara-a5e62f.netlify.app/
 
 ---
 
