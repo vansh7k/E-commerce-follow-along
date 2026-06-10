@@ -25,6 +25,7 @@ A hands-on, high-end MERN stack streetwear e-commerce platform featuring a bruta
 ### Backend (Node.js + Express + MongoDB)
 * **6 Custom Mongoose Models**: User (with addresses array), Product (slugs, SKUs, inventory logs), Category, Order (stock auto-deductions), Review (star ratings), and Wishlist.
 * **Security & Auth**: User login/registration using bcrypt password hashing and JWT token authorization headers.
+* **Forgot & Reset Password**: Secure random hex token generation, database expiry tracking, and nodemailer SMTP integration with console fallback.
 * **Stripe Gateway Simulation**: PaymentIntent processing mapped to standard Indian Rupee (INR) transactions.
 * **Secure Webhook Routing**: A dedicated raw body `/webhook` receiver mounted BEFORE `express.json()` to prevent signature validation crashes.
 * **Cloudinary Storage**: File uploads integrated directly with Cloudinary API and a local server fallback buffer.
@@ -32,6 +33,7 @@ A hands-on, high-end MERN stack streetwear e-commerce platform featuring a bruta
 ### Frontend (React + Vite + Zustand)
 * **Zustand State Cart**: Optimized client-side cart operations with localStorage persistence.
 * **Axios Auth Interceptors**: Automatically appends the Bearer token to headers on every request.
+* **Forgot & Reset Pages**: Visually aligned brutalist email recovery and password replacement screen entries.
 * **Auth Route Guards**: Custom `<ProtectedRoute>` and `<AdminRoute>` guards that lock dashboards and checkout portals from unauthenticated access.
 * **Admin Control Center**: KPI indicators showing live stats, low stock warnings, inline order status toggling, and customer registries.
 
