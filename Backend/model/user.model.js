@@ -14,7 +14,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["customer", "admin"], default: "customer" },
-  addresses: [addressSchema]
+  addresses: [addressSchema],
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date }
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);

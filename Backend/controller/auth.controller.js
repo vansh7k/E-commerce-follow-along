@@ -1,6 +1,8 @@
 const User = require("../model/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || "default_jwt_secret_key", {
@@ -169,4 +171,120 @@ const deleteAddress = async (req, res) => {
   }
 };
 
-module.exports = { register, login, me, addAddress, updateAddress, deleteAddress };
+// Forgot Password Request
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User with this email does not exist" });
+    }
+
+    // Generate reset token (20 bytes hex)
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    // Set fields on user
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour validity
+    await user.save();
+
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    const resetLink = `${clientUrl}/reset-password/${resetToken}`;
+
+    // Mailer configuration check
+    let transporter;
+    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+      transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || "587"),
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+    }
+
+    if (transporter) {
+      try {
+        await transporter.sendMail({
+          from: `"MAVERICK Archive" <noreply@maverick.com>`,
+          to: user.email,
+          subject: "Password Reset Request - MAVERICK",
+          text: `You requested a password reset. Please click the following link to reset your password: ${resetLink}. This link expires in 1 hour.`,
+          html: `
+            <div style="background-color: #0a0a0a; color: #e8e2d9; padding: 40px; font-family: monospace; border: 1px solid #2a2a2a; max-width: 500px; margin: auto;">
+              <h2 style="color: #c9440e; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; font-weight: normal; letter-spacing: 0.1em;">MAVERICK // ARCHIVE</h2>
+              <p style="font-size: 14px; line-height: 1.6;">A password reset request was received for your account.</p>
+              <p style="font-size: 14px; line-height: 1.6;">Click the button below to reset your password. This link is valid for 1 hour.</p>
+              <div style="margin: 25px 0;">
+                <a href="${resetLink}" style="display: inline-block; background-color: #c9440e; color: #e8e2d9; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 0; letter-spacing: 0.05em;">RESET PASSWORD</a>
+              </div>
+              <p style="font-size: 11px; color: #6b6460; border-top: 1px solid #2a2a2a; padding-top: 10px;">If you did not request this, please ignore this email.</p>
+            </div>
+          `,
+        });
+        return res.status(200).json({ message: "Password reset link sent to your email." });
+      } catch (mailError) {
+        console.error("Mail send error:", mailError);
+        console.log(`[RESET LINK FALLBACK]: ${resetLink}`);
+        return res.status(200).json({
+          message: "Password reset token created. (Mailing failed, link logged to server console)",
+          resetLink: process.env.NODE_ENV === "development" || !process.env.NODE_ENV ? resetLink : undefined,
+        });
+      }
+    } else {
+      // Dev mode console fallback
+      console.log(`\n======================================================`);
+      console.log(`[DEVELOPMENT PASSWORD RESET LINK]:`);
+      console.log(resetLink);
+      console.log(`======================================================\n`);
+      return res.status(200).json({
+        message: "Password reset link logged to server console (development mode).",
+        resetLink: resetLink,
+      });
+    }
+  } catch (error) {
+    console.error("ForgotPassword error:", error);
+    res.status(500).json({ message: "Forgot password request failed", error: error.message });
+  }
+};
+
+// Reset Password Action
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Password reset token is invalid or has expired." });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful. You can now login with your new password." });
+  } catch (error) {
+    console.error("ResetPassword error:", error);
+    res.status(500).json({ message: "Reset password failed", error: error.message });
+  }
+};
+
+module.exports = { register, login, me, addAddress, updateAddress, deleteAddress, forgotPassword, resetPassword };

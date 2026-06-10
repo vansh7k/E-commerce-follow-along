@@ -1,42 +1,37 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import API from "../api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Toast from "../components/Toast";
 import { useToastStore } from "../store/toastStore";
 
-const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const ForgotPasswordPage = () => {
   const addToast = useToastStore((state) => state.addToast);
-
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Redirect to previous page or home
-  const from = location.state?.from?.pathname || "/";
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrorMsg("");
+    setSuccessMsg("");
     setLoading(true);
 
     try {
-      const response = await API.post("/auth/login", { email, password });
-      const { token, user } = response.data;
+      const response = await API.post("/auth/forgot-password", { email });
+      setSuccessMsg(response.data.message || "RESET LINK SENT SUCCESSFULLY.");
+      addToast("RESET LINK SENT.", "success");
       
-      localStorage.setItem("maverick_token", token);
-      localStorage.setItem("maverick_user", JSON.stringify(user));
-
-      addToast("LOGIN SUCCESSFUL. WELCOME BACK.", "success");
-      navigate(from, { replace: true });
+      // Developer convenience fallback warning
+      if (response.data.resetLink) {
+        console.log("DEV RESET LINK:", response.data.resetLink);
+      }
     } catch (err) {
-      console.error("Login failed:", err);
-      const errMsg = err.response?.data?.message || "Invalid email or password.";
-      setError(errMsg);
+      console.error("Forgot password failed:", err);
+      const errMsg = err.response?.data?.message || "Failed to submit request.";
+      setErrorMsg(errMsg);
       addToast(errMsg, "error");
     } finally {
       setLoading(false);
@@ -66,7 +61,7 @@ const LoginPage = () => {
             padding: "40px"
           }}
         >
-          <h2 style={{ fontSize: "2rem", marginBottom: "8px", textAlign: "center" }}>ACCESS</h2>
+          <h2 style={{ fontSize: "2rem", marginBottom: "8px", textAlign: "center" }}>RECOVER</h2>
           <p style={{
             fontFamily: "var(--font-mono)",
             fontSize: "0.8rem",
@@ -74,11 +69,11 @@ const LoginPage = () => {
             textAlign: "center",
             marginBottom: "32px"
           }}>
-            ENTER YOUR DETAILS TO LOG IN
+            ENTER YOUR EMAIL TO RECEIVE RESET LINK
           </p>
 
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            {error && (
+            {errorMsg && (
               <div style={{
                 border: "1px solid #ff3333",
                 color: "#ff3333",
@@ -87,28 +82,29 @@ const LoginPage = () => {
                 fontSize: "0.8rem",
                 textAlign: "center"
               }}>
-                {error.toUpperCase()}
+                {errorMsg.toUpperCase()}
+              </div>
+            )}
+
+            {successMsg && (
+              <div style={{
+                border: "1px solid var(--ember)",
+                color: "var(--ember)",
+                padding: "12px",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.8rem",
+                textAlign: "center"
+              }}>
+                {successMsg.toUpperCase()}
               </div>
             )}
 
             <div>
               <input
                 type="email"
-                placeholder="EMAIL"
+                placeholder="EMAIL ADDRESS"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                className="input-brutalist"
-                disabled={loading}
-              />
-            </div>
-
-            <div>
-              <input
-                type="password"
-                placeholder="PASSWORD"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="input-brutalist"
                 disabled={loading}
@@ -121,7 +117,7 @@ const LoginPage = () => {
               className="btn btn-primary"
               style={{ width: "100%", marginTop: "10px" }}
             >
-              {loading ? "AUTHENTICATING..." : "LOG IN"}
+              {loading ? "SUBMITTING..." : "SEND RESET LINK"}
             </button>
           </form>
 
@@ -130,22 +126,12 @@ const LoginPage = () => {
             textAlign: "center",
             fontFamily: "var(--font-mono)",
             fontSize: "0.8rem",
-            color: "var(--dust)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px"
+            color: "var(--dust)"
           }}>
-            <div>
-              NEW CUSTOMER?{" "}
-              <Link to="/register" style={{ color: "var(--ember)", textDecoration: "underline" }}>
-                CREATE ACCOUNT
-              </Link>
-            </div>
-            <div>
-              <Link to="/forgot-password" style={{ color: "var(--dust)", textDecoration: "underline" }}>
-                FORGOT PASSWORD?
-              </Link>
-            </div>
+            BACK TO{" "}
+            <Link to="/login" style={{ color: "var(--ember)", textDecoration: "underline" }}>
+              LOG IN
+            </Link>
           </div>
         </div>
       </div>
@@ -155,4 +141,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

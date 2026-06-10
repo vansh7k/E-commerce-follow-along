@@ -12,6 +12,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
+import ForgotPassword from "./pages/ForgotPasswordPage";
+import ResetPassword from "./pages/ResetPasswordPage";
 
 // Admin Page Imports
 import Dashboard from "./pages/admin/Dashboard";
@@ -34,6 +36,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Protected Customer Routes */}
         <Route
