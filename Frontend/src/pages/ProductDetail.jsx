@@ -200,8 +200,8 @@ const ProductDetail = () => {
               overflow: "hidden",
               backgroundColor: "var(--ash)"
             }}>
-              <img
-                src={selectedImage ? `http://localhost:7000${selectedImage}` : "https://placehold.co/600x800/2A2A2A/E8E2D9?text=MAVERICK"}
+               <img
+                src={selectedImage ? `https://e-commerce-follow-along-iurp.onrender.com${selectedImage}` : "https://placehold.co/600x800/2A2A2A/E8E2D9?text=MAVERICK"}
                 alt={product.name}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 onError={(e) => {
@@ -227,7 +227,7 @@ const ProductDetail = () => {
                     }}
                   >
                     <img
-                      src={`http://localhost:7000${img}`}
+                      src={`https://e-commerce-follow-along-iurp.onrender.com${img}`}
                       alt={`${product.name} thumbnail ${idx}`}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />

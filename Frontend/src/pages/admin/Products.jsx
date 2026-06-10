@@ -226,7 +226,7 @@ const Products = () => {
                     <tr key={prod._id} style={{ borderBottom: "1px solid var(--ash)" }}>
                       <td style={{ padding: "12px" }}>
                         <img
-                          src={prod.images && prod.images[0] ? `http://localhost:7000${prod.images[0]}` : "https://placehold.co/40x50/2A2A2A/E8E2D9?text=M"}
+                          src={prod.images && prod.images[0] ? `https://e-commerce-follow-along-iurp.onrender.com${prod.images[0]}` : "https://placehold.co/40x50/2A2A2A/E8E2D9?text=M"}
                           alt={prod.name}
                           style={{ width: "40px", height: "50px", objectFit: "cover", border: "1px solid var(--ash)" }}
                           onError={(e) => {

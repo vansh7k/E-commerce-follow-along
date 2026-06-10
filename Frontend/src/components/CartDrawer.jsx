@@ -107,7 +107,7 @@ const CartDrawer = () => {
                   }}
                 >
                   <img
-                    src={item.product.images && item.product.images[0] ? `http://localhost:7000${item.product.images[0]}` : "https://placehold.co/100x130/2A2A2A/E8E2D9?text=MAVERICK"}
+                    src={item.product.images && item.product.images[0] ? `https://e-commerce-follow-along-iurp.onrender.com${item.product.images[0]}` : "https://placehold.co/100x130/2A2A2A/E8E2D9?text=MAVERICK"}
                     alt={item.product.name}
                     style={{ width: "80px", height: "100px", objectFit: "cover", border: "1px solid var(--ash)" }}
                     onError={(e) => {

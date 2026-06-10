@@ -255,7 +255,7 @@ const CheckoutPage = () => {
               {items.map((item) => (
                 <div key={`${item.product._id}-${item.size}`} style={{ display: "flex", gap: "12px", alignItems: "center" }}>
                   <img
-                    src={`http://localhost:7000${item.product.images[0]}`}
+                    src={`https://e-commerce-follow-along-iurp.onrender.com${item.product.images[0]}`}
                     alt={item.product.name}
                     style={{ width: "40px", height: "50px", objectFit: "cover", border: "1px solid var(--dust)" }}
                     onError={(e) => {

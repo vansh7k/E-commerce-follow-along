@@ -95,7 +95,7 @@ const ProductCard = ({ product, wishlistItems = [], onWishlistUpdate }) => {
       {/* Product Image Wrapper */}
       <div style={{ position: "relative", width: "100%", height: "300px", overflow: "hidden", backgroundColor: "var(--ash)" }}>
         <img
-          src={product.images && product.images[0] ? `http://localhost:7000${product.images[0]}` : "https://placehold.co/600x800/2A2A2A/E8E2D9?text=MAVERICK"}
+          src={product.images && product.images[0] ? `https://e-commerce-follow-along-iurp.onrender.com${product.images[0]}` : "https://placehold.co/600x800/2A2A2A/E8E2D9?text=MAVERICK"}
           alt={product.name}
           className="product-card-image"
           style={{

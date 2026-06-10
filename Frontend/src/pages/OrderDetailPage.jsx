@@ -142,7 +142,7 @@ const OrderDetailPage = () => {
                   alignItems: "center"
                 }}>
                   <img
-                    src={item.product && item.product.images ? `http://localhost:7000${item.product.images[0]}` : "https://placehold.co/80x100/2A2A2A/E8E2D9?text=M"}
+                    src={item.product && item.product.images ? `https://e-commerce-follow-along-iurp.onrender.com${item.product.images[0]}` : "https://placehold.co/80x100/2A2A2A/E8E2D9?text=M"}
                     alt={item.product?.name || "Product"}
                     style={{ width: "70px", height: "90px", objectFit: "cover", border: "1px solid var(--ash)" }}
                     onError={(e) => {
