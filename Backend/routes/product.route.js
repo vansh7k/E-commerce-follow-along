@@ -1,57 +1,15 @@
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
-const { productModel } = require("../model/product.model");
-// const { productModel } = require('../model/product.model');
+const { createProduct, updateProduct, deleteProduct, getProductBySlug, getAllProducts } = require("../controller/product.controller");
+const { protect, adminOnly } = require("../middleware/auth");
+const upload = require("../middleware/upload");
 
-let productRouter = express.Router();
+const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "././uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
-    );
-  },
-});
+router.get("/", getAllProducts);
+router.get("/:slug", getProductBySlug);
 
-const upload = multer({ storage: storage });
+router.post("/", protect, adminOnly, upload.array("images", 5), createProduct);
+router.put("/:id", protect, adminOnly, upload.array("images", 5), updateProduct);
+router.delete("/:id", protect, adminOnly, deleteProduct);
 
-productRouter.get("/", (req, res) => {
-  res.send({ msg: "Hello" });
-});
-
-productRouter.post(
-  "/create",
-  upload.array("productImage", 12),
-  async (req, res) => {
-    try {
-      const { productName, productDescription, productPrice } = req.body;
-
-      const imgPaths = req.files.map((file) => /uploads/`${file.filename}`);
-
-      console.log(imgPaths);
-
-      const newProduct = new productModel({
-        productName,
-        productDescription,
-        productPrice,
-        productImage: imgPaths,
-      });
-
-      await newProduct.save();
-      res.json({
-        message: "Hurray! Successfully added the product on database",
-      });
-    } catch (error) {
-      console.log(error);
-      res.send({ error });
-    }
-  }
-);
-
-module.exports = { productRouter };
+module.exports = router;
